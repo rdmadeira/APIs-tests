@@ -1,4 +1,5 @@
 document.forms[0].addEventListener('submit', apiRequest );
+document.forms[1].addEventListener('submit', ipGeolocation)
 async function apiRequest(e) {
     e.preventDefault();
     const email = document.getElementById('email').value;
@@ -25,6 +26,18 @@ async function apiRequest(e) {
         
     } catch (error) {
         showResults(error);
+        console.error(error);
+    }
+}
+async function ipGeolocation(e) {
+    e.preventDefault();
+    const password = document.getElementById('password2').value;
+    const url = "https://ipgeolocation.abstractapi.com/v1/?api_key=" + password;
+    const nfetch = await fetch(url);
+
+    try {
+        console.log(await nfetch.json());
+    } catch (error) {
         console.error(error);
     }
 }

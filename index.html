@@ -3,11 +3,44 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>APIs Tests - Fetch, Asincronas</title>
+    <title>APIs Tests - Fetch, Async Functions</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
+    <h1>APIs Tests</h1>
+    <div id="email-validation-div" class="apis-ctn">
+        <h2>Email Validation API:</h2>
+        <p>On this exercise I the email and password needs to match. The password is in my 'Abstractapi.com's account</p>
+        <p>Enter your Email and correct Password to get Object.</p>
+        <form action="./nuevo.php" method="post">
+            <div><label for="email">Input your email</label><input type="email" name="email" id="email" required/></div>
+            <div><label for="key">Input your password</label><input type="password" name="password" id="password" required/></div>
+            <button type="submit">Go!</button>
+        </form>
+        <div id="api-content-div">
+            <code id="api-content">
+
+            </code>
+        </div>
+    </div>
+    <div id="email-validation-div" class="apis-ctn">
+        <h2>Otra API:</h2>
+        <p>On this exercise I the email and password needs to match. The password is in my 'Abstractapi.com's account</p>
+        <p>Enter your Email and correct Password to get Object.</p>
+        <form action="./nuevo.php" method="post">
+            <div><label for="email">Input your email</label><input type="email" name="email" id="email" required/></div>
+            <div><label for="key">Input your password</label><input type="password" name="password" id="password" required/></div>
+            <button type="submit">Go!</button>
+        </form>
+        <div id="api-content-div">
+            <code id="api-content">
+
+            </code>
+        </div>
+    </div>
+    <div id="source">
+        <p>API Source: <a href="https://www.abstractapi.com/" target="_blank">abstractapi.com</a></p>
+    </div>
     <script src="main.js"></script>
 </body>
 </html>

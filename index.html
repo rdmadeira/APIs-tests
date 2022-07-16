@@ -18,9 +18,9 @@
             <button type="submit">Go!</button>
         </form>
         <div id="api-content-div" class="api-content-div">
-            <code id="api-content">
+            <p id="api-content">
 
-            </code>
+            </p>
         </div>
     </div>
     <div id="ip-geolocation-div" class="apis-ctn">
@@ -31,10 +31,48 @@
             <div><label for="password2">Input your Password</label><input type="password" name="password2" id="password2" required/></div>
             <button type="submit">Go!</button>
         </form>
-        <div id="geolocation-result-div">
-            <code id="geolocation-result">
-
-            </code>
+        <div id="geolocation-result-div" class="api-content-div">
+            <p id="geolocation-result">
+                
+            </p>
+        </div>
+    </div>
+    <div id="exchange-div" class="apis-ctn">
+        <h2>Latest Exchange rates:</h2>
+        <p>On this exercise, choose the base currency and the target currency. Click the button to get the latest rate.</p>
+        <p>Choose a Currency to know the latest rate result.</p>
+        <form action="./nuevo.php" method="post" id="exchange-form">
+            <div id="exchange-base-div">
+                <h3>Choose the base currency:</h3>
+                <input type="radio" name="base-currency" id="usd" value="USD" checked/>
+                <label for="usd">Dollar</label>
+                <input type="radio" name="base-currency" id="eur" value="EUR"/>
+                <label for="eur">Euro</label>
+                <input type="radio" name="base-currency" id="brl" value="BRL"/>
+                <label for="brl">Real</label>
+                <input type="radio" name="base-currency" id="gbp" value="GBP"/>
+                <label for="gbp">Pound Sterling</label>
+                <input type="radio" name="base-currency" id="rub" value="RUB"/>
+                <label for="rub">Russian Ruble</label>
+            </div>
+            <div id="exchange-return-div">
+                <h3>Choose the result currency:</h3>
+                <input type="radio" name="result-currency" id="usd-r" value="USD" checked/>
+                <label for="usd-r">Dollar</label>
+                <input type="radio" name="result-currency" id="eur-r" value="EUR"/>
+                <label for="eur-r">Euro</label>
+                <input type="radio" name="result-currency" id="brl-r" value="BRL"/>
+                <label for="brl-r">Real</label>
+                <input type="radio" name="result-currency" id="gbp-r" value="GBP"/>
+                <label for="gbp-r">Pound Sterling</label>
+                <input type="radio" name="result-currency" id="rub-r" value="RUB"/>
+                <label for="rub-r">Russian Ruble</label>
+            </div>
+            <button type="submit">Go!</button>
+        </form>
+        <div id="exchange-result-div" class="api-content-div">
+            <p id="exchange-result">                                
+            </p>
         </div>
     </div>
     <div id="source">

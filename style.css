@@ -1,11 +1,57 @@
-label {
-    margin-right: 10px;
+label + input[type="email"], label + input[type="password"], label + input[type="text"] {
+    margin-left: 10px;
 }
 div.apis-ctn {
     background-color: antiquewhite;
     margin: 20px 0;
     padding-bottom: 15px;
+    position: relative;
 }
 form>div {
     margin: 20px 0;
+}
+form div input:focus {
+    outline: rgb(11, 210, 87) 1.5px solid;
+    outline-offset: 2px;
+}
+.api-content-div {
+    position: absolute;
+    width: 20%;
+    padding: 2% 3%;
+    bottom: 30px;
+    right: 50px;
+    border: grey 1px solid;
+    border-radius: 10px;
+    transition: all ease-in 0.5s;
+    visibility: hidden;
+    opacity: 0;
+    line-height: 1.5;
+}
+.green {
+    background-color: aquamarine;
+}
+.red {
+    background-color:lightcoral;
+}
+.visible {
+    transition: all ease-in 0.5s;
+    visibility: visible;
+    opacity: 0.8;
+}
+#exchange-form input[type="radio"]  {
+    display: none;
+}
+#exchange-form label {
+    background-color: azure;
+    padding: 5px 10px;
+}
+#exchange-form div input[type="radio"]:checked + label {
+    background-color: brown;
+    color: aliceblue;
+}
+#exchange-result span {
+    background-color: azure;
+    padding: 1px 5px;
+    border-radius: 5px;
+    border: #0000ff63 1px solid;
 }

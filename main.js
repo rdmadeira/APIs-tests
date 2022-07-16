@@ -33,7 +33,7 @@ async function apiRequest(e) {
             console.log(obj);
             document.getElementById('api-content-div').classList.add('visible', 'red');
         }
-        setTimeout(()=>{document.getElementById('api-content-div').classList.remove('visible', 'green', 'red')}, 7000)
+        setTimeout(()=>{document.getElementById('api-content-div').classList.remove('visible', 'green', 'red'); document.getElementById('api-content').innerHTML = ''}, 7000)
     }
     const nfetch = await fetch(url);
     try {
@@ -69,7 +69,7 @@ async function ipGeolocation(e) {
             resultsText.innerText = `Invalid Response: ${obj.error.code}, ${obj.error.message}`;
             resultsTextDiv.classList.add('visible', 'red');
         }
-        setTimeout(()=>resultsTextDiv.classList.remove('visible','green', 'red'),8000);
+        setTimeout(()=>{resultsTextDiv.classList.remove('visible','green', 'red'); resultsText.innerText='';},8000);
     }   
     try {
         const result = await nfetch.json();

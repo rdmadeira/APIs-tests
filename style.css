@@ -1,10 +1,39 @@
+h1 {
+    font-size: max(min(6.5vw,36px),30px);
+}
+h2 {
+    font-size: max(min(5vw,28px),20px);
+}
+h3 {
+    font-size: max(min(3.8vw,18px),15px);
+}
+p {
+    font-size: min(max(4.5vw,18px),24px);
+}
+button {
+    font-size: max(min(2.5vw,18px),16px);
+    background-color: antiquewhite;
+    border: black 1.5px solid;
+    border-radius: 5px;
+    padding: max(0.7vw,5px) max(4vw,26px);
+    transition: background-color 0.4s ease-out;
+}
+button:hover {
+    background-color: #f8adad;
+    transition: background-color 0.4s ease-out;
+    cursor: pointer;
+}
 label + input[type="email"], label + input[type="password"], label + input[type="text"] {
     margin-left: 10px;
+    font-size: larger;
+    padding: 5px 8px;
+    border-radius: 5px;
+    border: none;
 }
 div.apis-ctn {
     background-color: antiquewhite;
     margin: 20px 0;
-    padding-bottom: 15px;
+    padding: min(2vw,10px) min(3vw,18px);
     position: relative;
 }
 form>div {
@@ -16,8 +45,8 @@ form div input:focus {
 }
 .api-content-div {
     position: absolute;
-    width: 20%;
-    padding: 2% 3%;
+    width: 30%;
+    padding: 1% 2%;
     bottom: 30px;
     right: 50px;
     border: grey 1px solid;
@@ -26,9 +55,13 @@ form div input:focus {
     visibility: hidden;
     opacity: 0;
     line-height: 1.5;
+    font-size: max(min(1.7vw,16px),13px);
+}
+.api-content-div p {
+    font-size: min(max(2vw,18px),24px);
 }
 .green {
-    background-color: aquamarine;
+    background-color: #7fffd47a;
 }
 .red {
     background-color:lightcoral;
@@ -44,6 +77,12 @@ form div input:focus {
 #exchange-form label {
     background-color: azure;
     padding: 5px 10px;
+    font-size: max(min(3vw,16px),14px);
+}
+#exchange-base-div>div, #exchange-return-div>div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3vw 2vw;
 }
 #exchange-form div input[type="radio"]:checked + label {
     background-color: brown;
@@ -54,4 +93,21 @@ form div input:focus {
     padding: 1px 5px;
     border-radius: 5px;
     border: #0000ff63 1px solid;
+}
+@media all and (max-width:790px) {
+    .api-content-div {
+        position: unset;
+        margin: auto;
+        width: 66%;
+        font-size: max(min(2.5vw,16px),14px);
+    }
+    #exchange-base-div>div, #exchange-return-div>div {
+        justify-content: center;
+    }
+    label + input[type="email"], label + input[type="password"], label + input[type="text"] {
+        display: block;
+        font-size: min(5.2vw,24px);
+        padding: 5px 10px;
+        margin: auto;
+    }
 }

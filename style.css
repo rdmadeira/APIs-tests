@@ -16,11 +16,12 @@ button {
     border: black 1.5px solid;
     border-radius: 5px;
     padding: max(0.7vw,5px) max(4vw,26px);
-    transition: background-color 0.4s ease-out;
+    transition: background-color,transform 0.4s ease-out;
 }
 button:hover {
     background-color: #f8adad;
-    transition: background-color 0.4s ease-out;
+    transform: translateY(-10px);
+    transition: background-color,transform 0.4s ease-out;
     cursor: pointer;
 }
 label + input[type="email"], label + input[type="password"], label + input[type="text"] {

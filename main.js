@@ -112,9 +112,6 @@ async function exchangeRate(e) {
 async function getGif (e) {
     e.preventDefault();
     const textValue = document.getElementById('giphy-text-input').value
-    const nFetch = async ()=>{
-        return (await fetch('https://api.giphy.com/v1/gifs/translate?api_key=gKK5DV4OnKmAsXUjK25Cl8hMsojLzyfa&s='+textValue)).json();
-    }
     function showResults(obj) {
         const resultDiv = document.getElementById('giphy-result-div');
         resultDiv.firstChild ? resultDiv.firstChild.remove() :resultDiv;
@@ -124,11 +121,18 @@ async function getGif (e) {
         resultDiv.appendChild(newImage);
         resultDiv.classList.add('visible');
     }
+    function showError(err) {
+        alert(err.meta.status);
+    }
+    const nFetch = async ()=>{
+        return (await fetch('https://api.giphy.com/v1/gifs/translate?api_key=&s='+textValue)).json();
+    }
     try {
         const result = await nFetch();
-        showResults(result);
+        result.meta.status===200 && showResults(result) || showError(result);
+        //result.meta.status!==200 && showError(result);
         console.log(result);
     } catch (error) {
-        console.log(error);
+        alert(error.message);
     }
 }

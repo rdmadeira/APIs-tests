@@ -1,6 +1,7 @@
 document.forms[0].addEventListener('submit', apiRequest );
 document.forms[1].addEventListener('submit', ipGeolocation);
 document.forms[2].addEventListener('submit', exchangeRate);
+document.forms[3].addEventListener('submit', getGif);
 
 /* ********************Email Validation ********************/
 async function apiRequest(e) {
@@ -105,5 +106,29 @@ async function exchangeRate(e) {
     } catch (error) {
         console.log(await error);        
         showError(error);
+    }
+}
+/* *********************************** Get Gif ******************************************** */
+async function getGif (e) {
+    e.preventDefault();
+    const textValue = document.getElementById('giphy-text-input').value
+    const nFetch = async ()=>{
+        return (await fetch('https://api.giphy.com/v1/gifs/translate?api_key=gKK5DV4OnKmAsXUjK25Cl8hMsojLzyfa&s='+textValue)).json();
+    }
+    function showResults(obj) {
+        const resultDiv = document.getElementById('giphy-result-div');
+        resultDiv.firstChild ? resultDiv.firstChild.remove() :resultDiv;
+        const newImage = document.createElement('img');
+        newImage.setAttribute('src', `${obj.data.images.original.url}`);
+        newImage.style.width = '100%';
+        resultDiv.appendChild(newImage);
+        resultDiv.classList.add('visible');
+    }
+    try {
+        const result = await nFetch();
+        showResults(result);
+        console.log(result);
+    } catch (error) {
+        console.log(error);
     }
 }

@@ -95,10 +95,27 @@ form div input:focus {
     border-radius: 5px;
     border: #0000ff63 1px solid;
 }
-div#giphy-result-div {
+a#giphy-result-div {
     width: 40%;
     margin: 0 auto;
     position: inherit;
+}
+div#gifgrid-result-div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 1%;
+    position: unset;
+    width: 90%;
+    gap: 5px 5px;
+}
+div#gifgrid-result-div a {
+    width: 25%;
+}
+div#gifgrid-result-div a img {
+    width: 100%;
+    height: auto;
 }
 @media all and (max-width:790px) {
     .api-content-div {

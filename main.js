@@ -2,6 +2,8 @@ document.forms[0].addEventListener('submit', apiRequest );
 document.forms[1].addEventListener('submit', ipGeolocation);
 document.forms[2].addEventListener('submit', exchangeRate);
 document.forms[3].addEventListener('submit', getGif);
+document.getElementById('gif-button').addEventListener('click',getGifGrid);
+// document.getElementById('sticker-button').addEventListener('click',getStickerGrid);
 
 /* ********************Email Validation ********************/
 async function apiRequest(e) {
@@ -137,3 +139,35 @@ async function getGif (e) {
         alert(error.message);
     }
 }
+
+/* *****************************Gif Grid ********************************* */
+async function getGifGrid(url) {
+    const textValue = document.getElementById('gif-sticker-text-input').value;
+    url = 'https://api.giphy.com/v1/gifs/search?api_key=4gsvo9fV6WdzvZYNXtlKIR72TB4zslvm&q='+textValue+'&limit=10&offset=0&rating=g&lang=en';
+    const response = await ((await fetch(url)).json());
+    function showResults(obj) {
+        const divResults = document.getElementById('gifgrid-result-div');
+        divResults.classList.add('visible');
+        //obj.data.sort( 
+        //    function(a,b){
+        //        a.images.downsized_medium.height > b.images.downsized_medium.height ? 1 : a.images.downsized_medium.height < b.images.downsized_medium.height ? -1 : 0;
+        //    }
+        //)
+        obj.data.forEach(item=>{
+            let a = document.createElement('a');
+            let image = document.createElement('img');
+            image.setAttribute('src', `${item.images.fixed_height.url}`);
+            a.appendChild(image);
+            divResults.appendChild(a);
+        })
+    }
+    try {
+        console.log(response);
+        showResults(response);
+    } catch (error) {
+        alert(error);
+        console.log(await fetch(url));
+    }
+
+}
+/* "1467922"   "57540" */

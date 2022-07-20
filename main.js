@@ -114,6 +114,7 @@ async function getGif (e) {
     const textValue = document.getElementById('giphy-text-input').value
     function showResults(obj) {
         const resultDiv = document.getElementById('giphy-result-div');
+        resultDiv.setAttribute('href',`https://i.giphy.com/${obj.data.id}.gif`);
         resultDiv.firstChild ? resultDiv.firstChild.remove() :resultDiv;
         const newImage = document.createElement('img');
         newImage.setAttribute('src', `${obj.data.images.original.url}`);
@@ -125,12 +126,12 @@ async function getGif (e) {
         alert(err.meta.status);
     }
     const nFetch = async ()=>{
-        return (await fetch('https://api.giphy.com/v1/gifs/translate?api_key=&s='+textValue)).json();
+        return (await fetch('https://api.giphy.com/v1/gifs/translate?api_key=gKK5DV4OnKmAsXUjK25Cl8hMsojLzyfa&s='+textValue)).json();
     }
     try {
         const result = await nFetch();
-        result.meta.status===200 && showResults(result) || showError(result);
-        //result.meta.status!==200 && showError(result);
+        result.meta.status===200 && showResults(result); 
+        result.meta.status!==200 && showError(result);
         console.log(result);
     } catch (error) {
         alert(error.message);

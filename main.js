@@ -4,16 +4,8 @@ document.forms[2].addEventListener('submit', exchangeRate);
 document.forms[3].addEventListener('submit', getGif);
 
 
-document.getElementById('gif-button').addEventListener('click',()=> {
-    const offsetValue =  document.getElementById('offset-input').value;
-    const textValue = document.getElementById('gif-sticker-text-input').value;
-    getGifGrid(textValue,offsetValue);
-});
-document.getElementById('sticker-button').addEventListener('click', ()=> {
-    const offsetValue =  document.getElementById('offset-input').value;
-    const textValue = document.getElementById('gif-sticker-text-input').value;
-    getStickerGrid(textValue, offsetValue)
-});
+document.getElementById('gif-button').addEventListener('click',()=> getGifGrid('Gifts'));
+document.getElementById('sticker-button').addEventListener('click', ()=> getGifGrid('Stickers'));
 
 /* ********************Email Validation ********************/
 async function apiRequest(e) {
@@ -151,10 +143,12 @@ async function getGif (e) {
 }
 
 /* *****************************Gif Grid ********************************* */
-async function getGifGrid(txt, offset) {
-    // const offsetValue =  document.getElementById('offset-input').value;
-    // const textValue = document.getElementById('gif-sticker-text-input').value;
-    let url = 'https://api.giphy.com/v1/gifs/search?api_key=gKK5DV4OnKmAsXUjK25Cl8hMsojLzyfa&q='+txt+'&limit=10&offset='+offset*10+'&rating=g&lang=en';
+async function getGifGrid(typBtn) {
+    const offsetValue =  document.getElementById('offset-input').value;
+    const textValue = document.getElementById('gif-sticker-text-input').value;
+    let url;
+    typBtn === 'Gifts' ? url = 'https://api.giphy.com/v1/gifs/search?api_key=gKK5DV4OnKmAsXUjK25Cl8hMsojLzyfa&q='+textValue+'&limit=10&offset='+offsetValue*10+'&rating=g&lang=en' : 
+    url = 'https://api.giphy.com/v1/stickers/search?api_key=gKK5DV4OnKmAsXUjK25Cl8hMsojLzyfa&q='+textValue+'&limit=10&offset='+offsetValue*10+'&rating=g&lang=en'
     const response = await ((await fetch(url)).json());
     function showResults(obj) {
         const divResults = document.getElementById('gifgrid-result-div');
@@ -168,7 +162,7 @@ async function getGifGrid(txt, offset) {
         }
 
         const divTitle = document.getElementById('gifgrid-title');
-        !divTitle.hasChildNodes() ? divTitle.appendChild(document.createTextNode(`Gifts of ${txt}`)) : divTitle.innerText = `Gifts of ${txt}`
+        !divTitle.hasChildNodes() ? divTitle.appendChild(document.createTextNode(`Gifts of ${textValue}`)) : divTitle.innerText = `${typBtn} of ${textValue}`;
         obj.data.sort( 
             function(a,b){
                 return Number(a.images.downsized_medium.height) - Number(b.images.downsized_medium.height);
@@ -191,8 +185,4 @@ async function getGifGrid(txt, offset) {
         console.log(await fetch(url));
     }
 }
-async function getStickerGrid() {
-    const offsetValue =  document.getElementById('offset-input').value;
-    const textValue = document.getElementById('gif-sticker-text-input').value;
-    let url = 'https://api.giphy.com/v1/gifs/search?api_key=gKK5DV4OnKmAsXUjK25Cl8hMsojLzyfa&q='+textValue+'&limit=10&offset='+offsetValue*10+'&rating=g&lang=en';
-}
+

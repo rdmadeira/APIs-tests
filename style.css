@@ -109,6 +109,21 @@ div#gifgrid-result-div {
     position: unset;
     width: 90%;
     gap: 5px 5px;
+    border: none;
+}
+#gif-sticker-text-input {
+    display: block;
+}
+#gif-sticker-input-div {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 10px;
+    justify-content: space-between;
+}
+#gifgrid-title {
+    text-align: center;
+    border: grey 1px solid;
+    border-radius: 10px;
 }
 div#gifgrid-result-div a {
     width: 25%;
@@ -116,6 +131,9 @@ div#gifgrid-result-div a {
 div#gifgrid-result-div a img {
     width: 100%;
     height: auto;
+}
+input#offset-input {
+    display: block;
 }
 @media all and (max-width:790px) {
     .api-content-div {

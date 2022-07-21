@@ -2,8 +2,18 @@ document.forms[0].addEventListener('submit', apiRequest );
 document.forms[1].addEventListener('submit', ipGeolocation);
 document.forms[2].addEventListener('submit', exchangeRate);
 document.forms[3].addEventListener('submit', getGif);
-document.getElementById('gif-button').addEventListener('click',getGifGrid);
-// document.getElementById('sticker-button').addEventListener('click',getStickerGrid);
+
+
+document.getElementById('gif-button').addEventListener('click',()=> {
+    const offsetValue =  document.getElementById('offset-input').value;
+    const textValue = document.getElementById('gif-sticker-text-input').value;
+    getGifGrid(textValue,offsetValue);
+});
+document.getElementById('sticker-button').addEventListener('click', ()=> {
+    const offsetValue =  document.getElementById('offset-input').value;
+    const textValue = document.getElementById('gif-sticker-text-input').value;
+    getStickerGrid(textValue, offsetValue)
+});
 
 /* ********************Email Validation ********************/
 async function apiRequest(e) {
@@ -141,22 +151,34 @@ async function getGif (e) {
 }
 
 /* *****************************Gif Grid ********************************* */
-async function getGifGrid(url) {
-    const textValue = document.getElementById('gif-sticker-text-input').value;
-    url = 'https://api.giphy.com/v1/gifs/search?api_key=4gsvo9fV6WdzvZYNXtlKIR72TB4zslvm&q='+textValue+'&limit=10&offset=0&rating=g&lang=en';
+async function getGifGrid(txt, offset) {
+    // const offsetValue =  document.getElementById('offset-input').value;
+    // const textValue = document.getElementById('gif-sticker-text-input').value;
+    let url = 'https://api.giphy.com/v1/gifs/search?api_key=gKK5DV4OnKmAsXUjK25Cl8hMsojLzyfa&q='+txt+'&limit=10&offset='+offset*10+'&rating=g&lang=en';
     const response = await ((await fetch(url)).json());
     function showResults(obj) {
         const divResults = document.getElementById('gifgrid-result-div');
-        divResults.classList.add('visible');
-        //obj.data.sort( 
-        //    function(a,b){
-        //        a.images.downsized_medium.height > b.images.downsized_medium.height ? 1 : a.images.downsized_medium.height < b.images.downsized_medium.height ? -1 : 0;
-        //    }
-        //)
+        if (divResults.firstChild) {
+            while (divResults.firstChild) {
+                divResults.firstChild.remove();
+            }
+        }
+        if (!divResults.classList.contains('visible')) {
+            divResults.classList.add('visible');
+        }
+
+        const divTitle = document.getElementById('gifgrid-title');
+        !divTitle.hasChildNodes() ? divTitle.appendChild(document.createTextNode(`Gifts of ${txt}`)) : divTitle.innerText = `Gifts of ${txt}`
+        obj.data.sort( 
+            function(a,b){
+                return Number(a.images.downsized_medium.height) - Number(b.images.downsized_medium.height);
+            }
+        )
         obj.data.forEach(item=>{
             let a = document.createElement('a');
+            a.setAttribute('href', 'https://i.giphy.com/'+item.id+'.gif');
             let image = document.createElement('img');
-            image.setAttribute('src', `${item.images.fixed_height.url}`);
+            image.setAttribute('src', `${item.images.downsized_medium.url}`);
             a.appendChild(image);
             divResults.appendChild(a);
         })
@@ -168,6 +190,9 @@ async function getGifGrid(url) {
         alert(error);
         console.log(await fetch(url));
     }
-
 }
-/* "1467922"   "57540" */
+async function getStickerGrid() {
+    const offsetValue =  document.getElementById('offset-input').value;
+    const textValue = document.getElementById('gif-sticker-text-input').value;
+    let url = 'https://api.giphy.com/v1/gifs/search?api_key=gKK5DV4OnKmAsXUjK25Cl8hMsojLzyfa&q='+textValue+'&limit=10&offset='+offsetValue*10+'&rating=g&lang=en';
+}

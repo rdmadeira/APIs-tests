@@ -2,8 +2,6 @@ document.forms[0].addEventListener('submit', apiRequest );
 document.forms[1].addEventListener('submit', ipGeolocation);
 document.forms[2].addEventListener('submit', exchangeRate);
 document.forms[3].addEventListener('submit', getGif);
-
-
 document.getElementById('gif-button').addEventListener('click',()=> getGifGrid('Gifts'));
 document.getElementById('sticker-button').addEventListener('click', ()=> getGifGrid('Stickers'));
 
@@ -147,8 +145,9 @@ async function getGifGrid(typBtn) {
     const offsetValue =  document.getElementById('offset-input').value;
     const textValue = document.getElementById('gif-sticker-text-input').value;
     let url;
-    typBtn === 'Gifts' ? url = 'https://api.giphy.com/v1/gifs/search?api_key=gKK5DV4OnKmAsXUjK25Cl8hMsojLzyfa&q='+textValue+'&limit=10&offset='+offsetValue*10+'&rating=g&lang=en' : 
-    url = 'https://api.giphy.com/v1/stickers/search?api_key=gKK5DV4OnKmAsXUjK25Cl8hMsojLzyfa&q='+textValue+'&limit=10&offset='+offsetValue*10+'&rating=g&lang=en'
+    typBtn === 'Gifts' ? 
+        url = 'https://api.giphy.com/v1/gifs/search?api_key=gKK5DV4OnKmAsXUjK25Cl8hMsojLzyfa&q='+textValue+'&limit=10&offset='+offsetValue*10+'&rating=g&lang=en' 
+        : url = 'https://api.giphy.com/v1/stickers/search?api_key=gKK5DV4OnKmAsXUjK25Cl8hMsojLzyfa&q='+textValue+'&limit=10&offset='+offsetValue*10+'&rating=g&lang=en'
     const response = await ((await fetch(url)).json());
     function showResults(obj) {
         const divResults = document.getElementById('gifgrid-result-div');
@@ -162,7 +161,7 @@ async function getGifGrid(typBtn) {
         }
 
         const divTitle = document.getElementById('gifgrid-title');
-        !divTitle.hasChildNodes() ? divTitle.appendChild(document.createTextNode(`Gifts of ${textValue}`)) : divTitle.innerText = `${typBtn} of ${textValue}`;
+        !divTitle.hasChildNodes() ? divTitle.appendChild(document.createTextNode(`${typBtn} of ${textValue}`)) : divTitle.innerText = `${typBtn} of ${textValue}`;
         obj.data.sort( 
             function(a,b){
                 return Number(a.images.downsized_medium.height) - Number(b.images.downsized_medium.height);

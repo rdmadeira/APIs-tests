@@ -1,4 +1,5 @@
-document.forms[0].addEventListener('submit', apiRequest );
+import {getData} from './get.js';
+document.forms[0].addEventListener('submit', (e)=> emailValidation(e) );
 document.forms[1].addEventListener('submit', ipGeolocation);
 document.forms[2].addEventListener('submit', exchangeRate);
 document.forms[3].addEventListener('submit', getGif);
@@ -6,110 +7,112 @@ document.getElementById('gif-button').addEventListener('click',()=> getGifGrid('
 document.getElementById('sticker-button').addEventListener('click', ()=> getGifGrid('Stickers'));
 
 /* ********************Email Validation ********************/
-async function apiRequest(e) {
+let url;
+function emailValidation(e) {
+    getUrl(e);
+    function getUrl(e) {
     e.preventDefault();
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
-    let url;
     if(password.match(/cjcn2526/)) {
+        console.log(url);
         url = 'https://emailvalidation.abstractapi.com/v1/?api_key=' + 'cdb1b806977441be83629fb4f841e7c4' + '&email='+ email;
     } else {
+        console.log(url);
         url = 'https://emailvalidation.abstractapi.com/v1/?api_key=' + 'kkk' + '&email='+ email;
     }
-    
-    /* **** Console url final ***** */
+    apiRequest(url);
     console.log(url);
-    
-    const showResults = async (obj)=>{
-        obj.autocorrect = false;
-        if (obj.email && obj.is_smtp_valid.value === true) {
-            document.getElementById('api-content').innerHTML =
-            `Valid Email: ${obj.email}, valid format: ${obj.is_smtp_valid.text}, ${obj.deliverability}`;
-            document.getElementById('api-content-div').classList.add('visible', 'green');
-            
-        } else if (obj.email && obj.is_smtp_valid.value === false) {
-            document.getElementById('api-content').innerHTML = `Invalid Email: ${obj.email}, ${obj.deliverability} `;
-            document.getElementById('api-content-div').classList.add('visible', 'green');
-        }
-        else {
-            document.getElementById('api-content').innerHTML = `${obj.error.code}! ${obj.error.message}`;
-            console.log(obj);
-            document.getElementById('api-content-div').classList.add('visible', 'red');
-        }
-        setTimeout(()=>{document.getElementById('api-content-div').classList.remove('visible', 'green', 'red'); document.getElementById('api-content').innerHTML = ''}, 7000)
     }
-    const nfetch = await fetch(url);
-    try {
-        const emailIsValid = await nfetch.json();
-        showResults(emailIsValid);
+    const showResults = async (obj)=>{
+    obj.autocorrect = false;
+    if (obj.email && obj.is_smtp_valid.value === true) {
+        document.getElementById('api-content').innerHTML =
+        `Valid Email: ${obj.email}, valid format: ${obj.is_smtp_valid.text}, ${obj.deliverability}`;
+        document.getElementById('api-content-div').classList.add('visible', 'green');
         
-    } catch (error) {
-        showResults(error);
-        console.error(error);
+    } else if (obj.email && obj.is_smtp_valid.value === false) {
+        document.getElementById('api-content').innerHTML = `Invalid Email: ${obj.email}, ${obj.deliverability} `;
+        document.getElementById('api-content-div').classList.add('visible', 'green');
+    }
+    else {
+        document.getElementById('api-content').innerHTML = `${obj.error.code}! ${obj.error.message}`;
+        document.getElementById('api-content-div').classList.add('visible', 'red');
+    }
+    setTimeout(()=>{document.getElementById('api-content-div').classList.remove('visible', 'green', 'red'); document.getElementById('api-content').innerHTML = ''}, 7000)
+    }
+    async function apiRequest(url) {
+    const data = await getData(url);
+    console.log(data);
+    showResults(data);
     }
 }
 
 /* *************** IP Geolocation *************************** */
 async function ipGeolocation(e) {
-    e.preventDefault();
-    const password = document.getElementById('password2').value;
-    let url;
-    if (password.match(/cjcn2526/)){
-        url = "https://ipgeolocation.abstractapi.com/v1/?api_key=" + 'dad7b450d09f4518a869ba88252891f1';
-    } else {
-        url = "https://ipgeolocation.abstractapi.com/v1/?api_key=" + 'kkk';
+    getUrl(e);
+    function getUrl(e) {
+        e.preventDefault();
+        const password = document.getElementById('password2').value;
+        if (password.match(/cjcn2526/)){
+            url = "https://ipgeolocation.abstractapi.com/v1/?api_key=" + 'dad7b450d09f4518a869ba88252891f1';
+        } else {
+            url = "https://ipgeolocation.abstractapi.com/v1/?api_key=" + 'kkk';
+        }
+        apiRequest(url);
     }
-    const nfetch = await fetch(url);
     const showResults = async (obj) => {
         const resultsTextDiv = document.getElementById('geolocation-result-div');
         const resultsText = document.getElementById('geolocation-result');
+        resultsTextDiv.classList.contains('visible') && resultsTextDiv.classList.remove('visible');
+
         if (await obj.city) {
             resultsText.innerText = `Valid response! IP: ${await obj.ip_address}, city: ${await obj.city}, region: ${await obj.region}, country: ${await obj.flag.emoji}`;
             resultsTextDiv.classList.add('visible', 'green');
            /*  resultsText.innerHTML = '<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d6572.470335198509!2d'+ obj.longitude+'!3d'+ obj.latitude+'!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-BR!2sar!4v1657991372177!5m2!1spt-BR!2sar" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>'     */
         } else {
             console.log(obj);
-            resultsText.innerText = `Invalid Response: ${obj.error.code}, ${obj.error.message}`;
+            resultsText.innerText = `Error 404 - Server Not Found`;
             resultsTextDiv.classList.add('visible', 'red');
         }
         setTimeout(()=>{resultsTextDiv.classList.remove('visible','green', 'red'); resultsText.innerText='';},8000);
-    }   
-    try {
-        const result = await nfetch.json();
-        console.log(result);
-        showResults(result);
-    } catch (error) {
-        showResults(error)
+    }
+    async function apiRequest(url) {
+        const data = await getData(url);   
+        await showResults(data);
+        console.log(data);
     }
 }
 /* *************** Exchange Rates *************************** */
 async function exchangeRate(e) {
-    e.preventDefault();
-    const baseChecked = document.querySelector('input[name="base-currency"]:checked').value;
-    const resultChecked = document.querySelector('input[name="result-currency"]:checked').value;
-    let url;
-    
-    url = 'https://exchange-rates.abstractapi.com/v1/live/?api_key=001fe8b1d50e46a99721c520852a3db9&base='+baseChecked+'&target='+resultChecked;
-    console.log(url);
-    const nfetch = await fetch(url);
+    getUrl(e);
+    function getUrl(e) {
+        e.preventDefault();
+        const baseChecked = document.querySelector('input[name="base-currency"]:checked').value;
+        const resultChecked = document.querySelector('input[name="result-currency"]:checked').value;
+        url = 'https://exchange-rates.abstractapi.com/v1/live/?api_key=001fe8b1d50e46a99721c520852a3db9&base='+baseChecked+'&target='+resultChecked;
+        apiRequest(url);
+    }
+    async function apiRequest(url) {
+        const data = await getData(url);
+        showResults(data);
+    }
     const showResults = (res) => {
-        const date = new Date(res.last_updated*1000);
-        console.log(date);
-        document.getElementById('exchange-result').innerHTML = `1 ${res.base} = <span>${Object.values(res.exchange_rates)[0]}</span> ${Object.keys(res.exchange_rates)[0]} -  (on ${date})`;
-        document.getElementById('exchange-result-div').classList.add('visible', 'green');
-    }
-    const showError = (err)=> {
-        document.getElementById('exchange-result').innerText = `Error: 404. Server not found!`;
-        document.getElementById('exchange-result-div').classList.add('visible', 'red');
-    }
-    try {
-        const result = await nfetch.json();
-        showResults(result)
-    } catch (error) {
-        console.log(await error);        
-        showError(error);
+        if (res.base) {
+            const date = new Date(res.last_updated*1000);
+            console.log(date);
+            const exchangeResultDiv = document.getElementById('exchange-result-div');
+            document.getElementById('exchange-result').innerHTML = `1 ${res.base} = <span>${Object.values(res.exchange_rates)[0]}</span> ${Object.keys(res.exchange_rates)[0]} -  (on ${date})`;
+            exchangeResultDiv.classList.add('visible'); 
+            exchangeResultDiv.classList.contains('red')? exchangeResultDiv.classList.toggle('red', 'green'): exchangeResultDiv.classList.add('green');            
+        } else {
+            document.getElementById('exchange-result').innerText = `Error: 404. Server not found!`;
+            document.getElementById('exchange-result-div').classList.add('visible', 'red');
+        }
     }
 }
+   
+
 /* *********************************** Get Gif ******************************************** */
 async function getGif (e) {
     e.preventDefault();

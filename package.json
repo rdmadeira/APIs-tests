@@ -1,0 +1,33 @@
+{
+  "name": "apis-tests",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Tests with https requests with fetch and axios",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon main.js",
+    "startget": "nodemon get.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rdmadeira/APIs-tests.git"
+  },
+  "keywords": [
+    "api",
+    "http",
+    "request",
+    "async",
+    "functions"
+  ],
+  "author": "Rodrigo Madeira",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rdmadeira/APIs-tests/issues"
+  },
+  "homepage": "https://github.com/rdmadeira/APIs-tests#readme",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "nodemon": "^2.0.19"
+  }
+}
